@@ -1,0 +1,14 @@
+C:\msys64\home\liam1\OOP-Week-4\bin\Debug\net9.0\OOP_Week_4.exe
+C:\msys64\home\liam1\OOP-Week-4\bin\Debug\net9.0\OOP_Week_4.deps.json
+C:\msys64\home\liam1\OOP-Week-4\bin\Debug\net9.0\OOP_Week_4.runtimeconfig.json
+C:\msys64\home\liam1\OOP-Week-4\bin\Debug\net9.0\OOP_Week_4.dll
+C:\msys64\home\liam1\OOP-Week-4\bin\Debug\net9.0\OOP_Week_4.pdb
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.GeneratedMSBuildEditorConfig.editorconfig
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.AssemblyInfoInputs.cache
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.AssemblyInfo.cs
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.csproj.CoreCompileInputs.cache
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.dll
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\refint\OOP_Week_4.dll
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.pdb
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.genruntimeconfig.cache
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\ref\OOP_Week_4.dll
