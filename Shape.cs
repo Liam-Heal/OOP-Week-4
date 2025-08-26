@@ -107,6 +107,15 @@ namespace ShapeDrawer
                 return false;
             }
         }
+        public bool IsWithinRadius(Point2D pt, double radius = 50.0)
+        {
+           
+            double dx = pt.X - this.X; 
+            double dy = pt.Y - this.Y;
+            return (dx * dx + dy * dy) <= (radius * radius);
+        }
+
+
     }
 
 
