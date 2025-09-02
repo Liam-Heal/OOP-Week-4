@@ -12,3 +12,4 @@ C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\refint\OOP_Week_4.dll
 C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.pdb
 C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.genruntimeconfig.cache
 C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\ref\OOP_Week_4.dll
+C:\msys64\home\liam1\OOP-Week-4\obj\Debug\net9.0\OOP_Week_4.sourcelink.json

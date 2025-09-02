@@ -13,6 +13,8 @@ namespace ShapeDrawer
         private int _width;
         private int _height;
 
+        private bool _selected;
+
         public Shape(int param)
         {
 
@@ -23,6 +25,33 @@ namespace ShapeDrawer
             _width = param;
             _height = param;
 
+            _selected = false;
+
+        }
+
+        public Shape(int param, double x, double y)  //: this(param)
+        {
+            _x = (float)x;
+            _y = (float)y;
+
+            _width = param;
+            _height = param;
+
+            _selected = false;
+
+            _color = Color.Chocolate;
+        }
+
+        public bool Selected
+        {
+            get
+            {
+                return _selected;
+            }
+            set
+            {
+                _selected = value;
+            }
         }
 
         public Color Color
