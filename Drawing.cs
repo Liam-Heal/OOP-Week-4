@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 using ShapeDrawer;
 using SplashKitSDK;
 
@@ -83,5 +85,71 @@ public class Drawing
     {
         _shapes.Remove(s);
     }
-    
+
+    public void Save(string filename)
+    {
+        StreamWriter writer = new StreamWriter(filename);
+
+        try
+        {
+            writer.WriteColor(Background);
+            writer.WriteLine(ShapeCount);
+            foreach (Shape s in _shapes)
+            {
+                s.SaveTo(writer);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("The write error is " + ex.Message);
+        }
+        finally
+        {
+            writer.Close();
+        }
+    }
+    public void Load(string filename)
+    {
+        StreamReader reader = new StreamReader(filename);
+        try
+        {
+            Background = reader.ReadColor();
+            int count = reader.ReadInteger();
+            _shapes.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                Shape s;
+                string? kind = reader.ReadLine();  
+
+                if (string.IsNullOrWhiteSpace(kind))
+                    throw new InvalidDataException("Unexpected end of file or missing shape kind.");
+
+                switch (kind)
+                {
+                    case "Circle":
+                        s = new MyCircle();
+                        break;
+                    case "Rectangle":
+                        s = new MyRectangle();
+                        break;
+                    default:
+                        throw new InvalidDataException($"Unknown shape kind: {kind}");
+                }
+
+                s.LoadFrom(reader);
+                AddShape(s);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("The read error is " + ex.Message);
+            SplashKit.CloseAllWindows();
+        }
+        finally
+        {
+            reader.Close();
+        }
+    }
+
 }

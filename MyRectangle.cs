@@ -1,4 +1,5 @@
 using SplashKitSDK;
+using System.IO;
 
 namespace ShapeDrawer
 {
@@ -63,7 +64,7 @@ namespace ShapeDrawer
 
         public override void DrawOutline()
         {
-            SplashKit.FillRectangle(Color.Black, _x-2, _y-2, _width+4, _height+4);
+            SplashKit.FillRectangle(Color.Black, _x - 2, _y - 2, _width + 4, _height + 4);
         }
 
         public override bool IsAt(Point2D pt)
@@ -72,6 +73,19 @@ namespace ShapeDrawer
             return check;
         }
 
+        public override void SaveTo(StreamWriter writer)
+        {
+            writer.WriteLine("Rectangle");
+            base.SaveTo(writer);
+            writer.WriteLine(Width);
+            writer.WriteLine(Height);
+        }
+        public override void LoadFrom(StreamReader reader)
+        {
+            base.LoadFrom(reader);            
+            _width = reader.ReadInteger();
+            _height = reader.ReadInteger();
+        }
     }
 
 }

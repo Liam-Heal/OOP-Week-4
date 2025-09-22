@@ -11,7 +11,7 @@ namespace OOP_Week_4
         {
             Rectangle,
             Circle,
-            Line, 
+            Line,
         }
         public static void Main()
         {
@@ -53,27 +53,27 @@ namespace OOP_Week_4
                             newShape = new MyCircle();
                             break;
                         case ShapeKind.Line:
-                        {
-                            Point2D p = SplashKit.MousePosition();
-                            const int lineCount = 5;
-                            const float spacing = 8f;   // gap between lines
-                            const float length = 120f;  // how long the line goes to the right
-
-                            for (int i = 0; i < lineCount; i++)
                             {
-                                float y = (float)p.Y + i * spacing;
-                                var line = new MyLine
-                                {
-                                    X = (float)p.X,
-                                    Y = y,
-                                    EndX = (float)p.X + length,
-                                    EndY = y,
-                                };
-                                myDrawing.AddShape(line);
-                            }
+                                Point2D p = SplashKit.MousePosition();
+                                const int lineCount = 15;
+                                const float spacing = 8f;   // gap between lines
+                                const float length = 120f;  // how long the line goes to the right
 
-                            continue;
-                        }
+                                for (int i = 0; i < lineCount; i++)
+                                {
+                                    float y = (float)p.Y + i * spacing;
+                                    var line = new MyLine
+                                    {
+                                        X = (float)p.X,
+                                        Y = y,
+                                        EndX = (float)p.X + length,
+                                        EndY = y,
+                                    };
+                                    myDrawing.AddShape(line);
+                                }
+
+                                continue;
+                            }
                         default:
                             newShape = new MyRectangle();
                             break;
@@ -89,6 +89,21 @@ namespace OOP_Week_4
                 if (SplashKit.MouseClicked(MouseButton.RightButton))
                 {
                     myDrawing.SelectedShapesAt(SplashKit.MousePosition());
+                }
+                if (SplashKit.KeyTyped(KeyCode.SKey))
+                {
+                    myDrawing.Save("105923500.txt");
+                }
+                if (SplashKit.KeyTyped(KeyCode.OKey))
+                {
+                    try
+                    {
+                        myDrawing.Load("105923500.txt");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Load failed: " + ex.Message);
+                    }
                 }
 
                 myDrawing.Draw();

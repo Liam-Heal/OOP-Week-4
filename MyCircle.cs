@@ -1,4 +1,5 @@
 using SplashKitSDK;
+using System.IO;
 
 namespace ShapeDrawer
 {
@@ -32,12 +33,25 @@ namespace ShapeDrawer
 
         public override void DrawOutline()
         {
-            SplashKit.FillCircle(Color.Black, _x, _y, _radius+2);
+            SplashKit.FillCircle(Color.Black, _x, _y, _radius + 2);
         }
 
         public override bool IsAt(Point2D pt)
         {
             return SplashKit.PointInCircle(pt.X, pt.X, _x, _y, _radius);
+        }
+
+        public override void SaveTo(StreamWriter writer)
+        {
+            writer.WriteLine("Circle");
+            base.SaveTo(writer);
+            writer.WriteLine(_radius);
+        }
+
+        public override void LoadFrom(StreamReader reader)
+        {
+            base.LoadFrom(reader); 
+            _radius = reader.ReadInteger();
         }
     }
 }

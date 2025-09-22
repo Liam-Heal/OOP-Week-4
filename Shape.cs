@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using SplashKitSDK;
 
 namespace ShapeDrawer
@@ -103,11 +104,26 @@ namespace ShapeDrawer
         //SplashKit.FillRectangle(_color, _x, _y, _width, _height);
         // }
 
-       public abstract bool IsAt(Point2D pt);
+        public abstract bool IsAt(Point2D pt);
 
 
+
+        public virtual void SaveTo(StreamWriter writer)
+        {
+            writer.WriteColor(_color);
+            writer.WriteLine(X);
+            writer.WriteLine(Y);
+        }
+
+        public virtual void LoadFrom(StreamReader reader)
+        {
+        _color = reader.ReadColor();
+        _x = reader.ReadSingle();
+        _y = reader.ReadSingle();
+        }
 
     }
+
 
 
 }
