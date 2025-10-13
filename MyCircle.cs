@@ -3,16 +3,14 @@ using System.IO;
 
 namespace ShapeDrawer
 {
-
     public class MyCircle : Shape
     {
-
         private int _radius;
 
         public MyCircle()
         {
             _color = Color.Blue;
-            _radius = 40 + 50;
+            _radius = 90;
         }
 
         public MyCircle(Color color, float x, float y, int radius)
@@ -22,12 +20,10 @@ namespace ShapeDrawer
             _y = y;
             _radius = radius;
         }
+
         public override void Draw()
         {
-            if (Selected == true)
-            {
-                DrawOutline();
-            }
+            if (Selected) DrawOutline();
             SplashKit.FillCircle(_color, _x, _y, _radius);
         }
 
@@ -38,7 +34,8 @@ namespace ShapeDrawer
 
         public override bool IsAt(Point2D pt)
         {
-            return SplashKit.PointInCircle(pt.X, pt.X, _x, _y, _radius);
+            // bugfix: second arg should be pt.Y (not pt.X)
+            return SplashKit.PointInCircle(pt.X, pt.Y, _x, _y, _radius);
         }
 
         public override void SaveTo(StreamWriter writer)
@@ -50,8 +47,13 @@ namespace ShapeDrawer
 
         public override void LoadFrom(StreamReader reader)
         {
-            base.LoadFrom(reader); 
+            base.LoadFrom(reader);
             _radius = reader.ReadInteger();
+        }
+
+        public override void Scale(float factor)
+        {
+            _radius = (int)System.Math.Max(1, _radius * factor);
         }
     }
 }

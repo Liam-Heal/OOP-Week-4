@@ -18,6 +18,7 @@ namespace ShapeDrawer
             get => _endY;
             set => _endY = value;
         }
+
         public MyLine()
         {
             _color = Color.Red;
@@ -53,6 +54,14 @@ namespace ShapeDrawer
         {
             var line = SplashKit.LineFrom(_x, _y, _endX, _endY);
             return SplashKit.PointOnLine(pt, line, 3);
+        }
+
+        public override void Scale(float factor)
+        {
+            float dx = _endX - _x;
+            float dy = _endY - _y;
+            _endX = _x + dx * factor;
+            _endY = _y + dy * factor;
         }
     }
 }

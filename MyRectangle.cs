@@ -3,7 +3,6 @@ using System.IO;
 
 namespace ShapeDrawer
 {
-
     public class MyRectangle : Shape
     {
         private int _width;
@@ -14,11 +13,10 @@ namespace ShapeDrawer
             _color = Color.Yellow;
             _x = 0.0f;
             _y = 0.0f;
-
-            _width = 100 + 50;
-            _height = 100 + 50;
-
+            _width = 150;
+            _height = 150;
         }
+
         public MyRectangle(Color color, float x, float y, int width, int height)
         {
             _color = color;
@@ -28,37 +26,21 @@ namespace ShapeDrawer
             _height = height;
         }
 
-
         public int Width
         {
-            get
-            {
-                return _width;
-            }
-            set
-            {
-                _width = value;
-            }
+            get { return _width; }
+            set { _width = value; }
         }
 
         public int Height
         {
-            get
-            {
-                return _height;
-            }
-            set
-            {
-                _height = value;
-            }
+            get { return _height; }
+            set { _height = value; }
         }
 
         public override void Draw()
         {
-            if (Selected == true)
-            {
-                DrawOutline();
-            }
+            if (Selected) DrawOutline();
             SplashKit.FillRectangle(_color, _x, _y, _width, _height);
         }
 
@@ -69,8 +51,7 @@ namespace ShapeDrawer
 
         public override bool IsAt(Point2D pt)
         {
-            bool check = SplashKit.PointInRectangle(pt.X, pt.Y, _x, _y, _width, _height);
-            return check;
+            return SplashKit.PointInRectangle(pt.X, pt.Y, _x, _y, _width, _height);
         }
 
         public override void SaveTo(StreamWriter writer)
@@ -80,12 +61,18 @@ namespace ShapeDrawer
             writer.WriteLine(Width);
             writer.WriteLine(Height);
         }
+
         public override void LoadFrom(StreamReader reader)
         {
-            base.LoadFrom(reader);            
+            base.LoadFrom(reader);
             _width = reader.ReadInteger();
             _height = reader.ReadInteger();
         }
-    }
 
+        public override void Scale(float factor)
+        {
+            _width = (int)System.Math.Max(1, _width * factor);
+            _height = (int)System.Math.Max(1, _height * factor);
+        }
+    }
 }

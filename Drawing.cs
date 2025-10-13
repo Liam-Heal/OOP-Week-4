@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using ShapeDrawer;
 using SplashKitSDK;
+using System.Collections.Generic;
 
 public class Drawing
 {
@@ -38,22 +39,13 @@ public class Drawing
 
     public int ShapeCount
     {
-        get
-        {
-            return _shapes.Count;
-        }
+        get { return _shapes.Count; }
     }
 
     public Color Background
     {
-        get
-        {
-            return _background;
-        }
-        set
-        {
-            _background = value;
-        }
+        get { return _background; }
+        set { _background = value; }
     }
 
     public void Draw()
@@ -108,6 +100,7 @@ public class Drawing
             writer.Close();
         }
     }
+
     public void Load(string filename)
     {
         StreamReader reader = new StreamReader(filename);
@@ -119,7 +112,7 @@ public class Drawing
             for (int i = 0; i < count; i++)
             {
                 Shape s;
-                string? kind = reader.ReadLine();  
+                string? kind = reader.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(kind))
                     throw new InvalidDataException("Unexpected end of file or missing shape kind.");
@@ -139,7 +132,6 @@ public class Drawing
                 s.LoadFrom(reader);
                 AddShape(s);
             }
-
         }
         catch (Exception ex)
         {
@@ -152,4 +144,9 @@ public class Drawing
         }
     }
 
+    // NEW: shrink everything by factor
+    public void ScaleAll(float factor)
+    {
+        foreach (var s in _shapes) s.Scale(factor);
+    }
 }
