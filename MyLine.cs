@@ -63,5 +63,24 @@ namespace ShapeDrawer
             _endX = _x + dx * factor;
             _endY = _y + dy * factor;
         }
+
+                public override void SaveTo(StreamWriter writer)
+        {
+            writer.WriteLine("Line");
+            writer.WriteColor(_color); // matches your other shapes’ format
+            writer.WriteLine(_x);
+            writer.WriteLine(_y);
+            writer.WriteLine(_endX);
+            writer.WriteLine(_endY);
+        }
+
+        public override void LoadFrom(StreamReader reader)
+        {
+            _color = reader.ReadColor();
+            _x = reader.ReadSingle();
+            _y = reader.ReadSingle();
+            _endX = reader.ReadSingle();
+            _endY = reader.ReadSingle();
+        }
     }
 }

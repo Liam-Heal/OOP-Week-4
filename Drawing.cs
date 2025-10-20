@@ -37,6 +37,15 @@ public class Drawing
         }
     }
 
+    public void RandomizeAllColors()
+    {
+        foreach (Shape s in _shapes)
+        {
+            s.Color = Color.RGBColor(SplashKit.Rnd(), SplashKit.Rnd(), SplashKit.Rnd());
+        }
+    }
+
+
     public int ShapeCount
     {
         get { return _shapes.Count; }
@@ -124,6 +133,9 @@ public class Drawing
                         break;
                     case "Rectangle":
                         s = new MyRectangle();
+                        break;
+                    case "Line":
+                        s = new MyLine();
                         break;
                     default:
                         throw new InvalidDataException($"Unknown shape kind: {kind}");

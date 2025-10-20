@@ -37,13 +37,17 @@ namespace OOP_Week_4
                 if (SplashKit.KeyTyped(KeyCode.NKey))
                 {
                     var p = SplashKit.MousePosition();
-                    // (x, x, x, Stroke unit(Spacing for letters), letter height, thickness of stroke, x)
-                    DrawFirstNameLIAM_Lines(myDrawing, (float)p.X, (float)p.Y, 16, 64, 6, Color.CornflowerBlue);
+                    DrawFirstNameLIAM_Lines(myDrawing, (float)p.X, (float)p.Y, 16, 64, 6, Color.Blue);
                 }
 
                 if (SplashKit.KeyTyped(KeyCode.KKey))
                 {
                     myDrawing.ScaleAll(0.8f);
+                }
+                
+                if (SplashKit.KeyTyped(KeyCode.HKey))
+                {
+                    myDrawing.RandomizeAllColors();
                 }
 
                 if (SplashKit.MouseClicked(MouseButton.LeftButton))
@@ -163,83 +167,45 @@ namespace OOP_Week_4
             float x = startX;
             float y = startY;
             int gap = stroke;
-            // ThickSeg draws a “thick” line between (x1,y1) → (x2,y2) by stacking many 1-pixel lines side-by-side. It computes the unit direction along the line to extend the ends, the perpendicular to offset it, then draw the lines with passes to give the diagonals some thickness.
-            void ThickSeg(float x1, float y1, float x2, float y2)
+
+            void Rect(float rx, float ry, float rw, float rh)
             {
-                float dx = x2 - x1;
-                float dy = y2 - y1;
-                float len = (float)Math.Sqrt(dx * dx + dy * dy);
-                if (len <= 0.0001f) return;
-
-                float tx =  dx / len;
-                float ty =  dy / len;
-                float nx = -dy / len;
-                float ny =  dx / len;
-
-                float half = thickness / 2f;
-
-                // extend the ends along the tangent to hide small V-gaps where strokes meet
-                float cap = half + 0.5f;
-                float sx1 = x1 - tx * cap;
-                float sy1 = y1 - ty * cap;
-                float sx2 = x2 + tx * cap;
-                float sy2 = y2 + ty * cap;
-
-                // sub-pixel step and a second phase to pack lines tightly
-                float step = 0.25f;
-                float halfStep = step * 0.5f;
-
-                void Pass(float phase)
-                {
-                    for (float i = -half; i <= half; i += step)
-                    {
-                        float t = i + phase;
-                        float offx = nx * t;
-                        float offy = ny * t;
-                        var seg = new MyLine(color, sx1 + offx, sy1 + offy, sx2 + offx, sy2 + offy);
-                        drawing.AddShape(seg);
-                    }
-                }
-
-                Pass(0f);
-                Pass(halfStep);
+                var r = new MyRectangle();
+                r.Color = color;
+                r.X = rx;
+                r.Y = ry;
+                r.Width = (int)rw;
+                r.Height = (int)rh;
+                drawing.AddShape(r);
             }
 
-            // L
+
             float lWidth = stroke * 2.5f;
-            ThickSeg(x, y, x, y + letterHeight);
-            ThickSeg(x, y + letterHeight, x + lWidth, y + letterHeight);
+            Rect(x, y, thickness, letterHeight);
+            Rect(x, y + letterHeight - thickness, lWidth, thickness);
             x += lWidth + gap;
 
-            // I
-            ThickSeg(x + (stroke / 2f), y, x + (stroke / 2f), y + letterHeight);
+            Rect(x + (stroke / 2f) - (thickness / 2f), y, thickness, letterHeight);
             x += stroke + gap;
 
-            // A (two diagonals meeting at top + a crossbar halfway)
             float aWidth = stroke * 3f;
-            float aLeft  = x;
-            float aRight = x + aWidth;
-            float aTopX  = x + aWidth / 2f;
-            float aTopY  = y;
-            float aBotY  = y + letterHeight;
-            ThickSeg(aLeft,  aBotY, aTopX, aTopY);
-            ThickSeg(aRight, aBotY, aTopX, aTopY);
-            float crossY = y + letterHeight / 2f;
-            ThickSeg(aLeft + stroke * 0.5f, crossY, aRight - stroke * 0.5f, crossY);
+            float aLeft = x;
+            float aRight = x + aWidth - thickness;
+            Rect(aLeft, y, thickness, letterHeight);
+            Rect(aRight, y, thickness, letterHeight);
+            Rect(aLeft, y, aWidth, thickness);
+            Rect(aLeft + thickness * 0.5f, y + letterHeight * 0.5f - thickness * 0.5f, aWidth - thickness, thickness);
             x += aWidth + gap;
 
-            // M (two verticals + two diagonals towards middle low-peak)
             float mWidth = stroke * 4f;
-            float mLeft  = x;
-            float mRight = x + mWidth;
-            float mTopY  = y;
-            float mBotY  = y + letterHeight;
-            float mMidX  = x + mWidth / 2f;
+            float mLeft = x;
+            float mRight = x + mWidth - thickness;
+            Rect(mLeft, y, thickness, letterHeight);
+            Rect(mRight, y, thickness, letterHeight);
+            Rect(mLeft, y, mWidth, thickness);
+            float mMidX = x + mWidth / 2f - thickness / 2f;
             float mPeakY = y + letterHeight * 0.45f;
-            ThickSeg(mLeft, mTopY, mLeft, mBotY);
-            ThickSeg(mRight, mTopY, mRight, mBotY);
-            ThickSeg(mLeft,  mTopY, mMidX, mPeakY);
-            ThickSeg(mRight, mTopY, mMidX, mPeakY);
+            Rect(mMidX, y, thickness, mPeakY - y);
         }
     }
 }
